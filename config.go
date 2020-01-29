@@ -13,6 +13,11 @@ type Config struct {
 	Blacklist []int64  `yaml:"blacklist"`
 	Font      string   `yam:"font"`
 	Phrases   []string `yaml:"phrases"`
+	Group     struct {
+		Enabled               bool    `yaml:"enabled"`
+		ActivationPhrase      string  `yaml:"activation_phrase"`
+		ActivationProbability float64 `yaml:"activation_probability"`
+	} `yaml:"group"`
 }
 
 func LoadConfig(configPath string) (*Config, error) {

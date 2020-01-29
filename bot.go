@@ -177,15 +177,30 @@ func (bot *Bot) processUpdate(update tgbotapi.Update, workerIdx int) error {
 		return nil
 	}
 
-	fromID := update.Message.Chat.ID
+	msg := update.Message
+	chat := msg.Chat
+	fromID := chat.ID
+
 	if !bot.isAllowed(fromID) {
 		bot.logDebug("From id is not allowed: %v", fromID)
 		return nil
 	}
 
-	if update.Message.Photo == nil {
+	if msg.Photo == nil {
 		bot.logDebug("No photo")
 		return nil
+	}
+
+	if chat.IsGroup() {
+		if !bot.cfg.Group.Enabled {
+			return nil
+		}
+
+		if bot.cfg.Group.ActivationPhrase != "" && bot.cfg.Group.ActivationPhrase != msg.Caption {
+			if rand.Float64() > bot.cfg.Group.ActivationProbability {
+				return nil
+			}
+		}
 	}
 
 	// Get photo with maximum width

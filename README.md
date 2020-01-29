@@ -3,10 +3,23 @@
 ### Example `config.yaml`
 
 ```yaml
+# Telegram bot token
 token: 'Your token here'
+# Debug mode
 debug: true
+# Number of workers (should be equal number of cores)
 workers: 4
+# Font to use
 font: 'assets/font.ttf'
+# Group settings
+group:
+    # Enable or disable for groups
+    enabled: true
+    # Caption to activate bot (empty string for any caption)
+    activation_phrase: 'bot'
+    # Probability of activation in any case (0.0 for activation only with caption)
+    activation_probability: 0.1
+# List of phrases to choose from
 phrases:
     - 'Random phrase 1'
     - 'Random phrase 2'
