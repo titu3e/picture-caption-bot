@@ -98,26 +98,26 @@ func drawCaption(img image.Image, fnt *truetype.Font, text string) (image.Image,
 
 	yOffset := 0
 
-	botline := int(bottomMargin * float64(h))
-	topline := botline + 80
-	mean_luminocity := 0.0
+	botLine := int(bottomMargin * float64(h))
+	topLine := botLine + 80
+	meanLuminosity := 0.0
 
-	for i := botline; i < topline; i++ {
+	for i := botLine; i < topLine; i++ {
 		for j := 0; j < w; j++ {
 			r, g, b, _ := img.At(j, h-i).RGBA()
-			mean_luminocity += 0.2989*float64(r) + 0.5870*float64(g) + 0.1140*float64(b)
+			meanLuminosity += 0.2989*float64(r) + 0.5870*float64(g) + 0.1140*float64(b)
 		}
 	}
 
-	mean_luminocity /= float64((topline - botline) * w * 65536)
+	meanLuminosity /= float64((topLine - botLine) * w * 65536)
 
-	c := color.RGBA{255, 255, 255, 255}
+	c := color.RGBA{R: 255, G: 255, B: 255, A: 255}
 
-	if mean_luminocity > 0.7 {
-		c = color.RGBA{0, 0, 0, 255}
+	if meanLuminosity > 0.7 {
+		c = color.RGBA{A: 255}
 	}
 
-	for idx, _ := range lines {
+	for idx := range lines {
 		jdx := len(lines) - idx - 1
 		line := lines[jdx]
 
