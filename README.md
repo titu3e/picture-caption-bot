@@ -2,6 +2,8 @@
 
 This is a lightweight and fast telegram bot which adds random captions to pictures.
 
+![Example](https://storage.yandexcloud.net/meownoid-pro-static/external/github/picture-caption-bot/example.png)
+
 ## Usage
 
 #### Clone this repository
