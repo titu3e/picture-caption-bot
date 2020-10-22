@@ -1,27 +1,29 @@
 # Picture Caption Bot
 
-### Example `config.yaml`
+This is a lightweight and fast telegram bot which adds random captions to pictures.
 
-```yaml
-# Telegram bot token
-token: 'Your token here'
-# Debug mode
-debug: true
-# Number of workers (should be equal number of cores)
-workers: 4
-# Font to use
-font: 'assets/font.ttf'
-# Group settings
-group:
-    # Enable or disable for groups
-    enabled: true
-    # Caption to activate bot (empty string for any caption)
-    activation_phrase: 'bot'
-    # Probability of activation in any case (0.0 for activation only with caption)
-    activation_probability: 0.1
-# List of phrases to choose from
-phrases:
-    - 'Random phrase 1'
-    - 'Random phrase 2'
-    - 'Random phrase 3'
+## Usage
+
+#### Clone this repository
+
+```shell script
+git clone https://github.com/meownoid/picture-caption-bot.git
+```
+
+#### Build executable
+
+```shell script
+cd picture-caption-bot
+go build
+```
+
+#### Change config
+
+Edit `config.yaml` or create a new one. Set `token` to your Telegram bot token and `phrases` to phrases you want to use.
+Optionally replace `font` with path to your custom font.
+
+#### Start the bot
+
+```shell script
+./picture-caption-bot -config config.yaml
 ```
