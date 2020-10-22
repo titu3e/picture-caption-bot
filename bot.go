@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
-	crypto_rand "crypto/rand"
+	cryptorand "crypto/rand"
 	"encoding/binary"
 	"errors"
 	"image"
@@ -42,7 +42,7 @@ func New(cfg *Config) (*Bot, error) {
 	}
 
 	if cfg.Workers <= 0 {
-		return nil, errors.New("Number of workers must be > 0")
+		return nil, errors.New("number of workers must be positive")
 	}
 
 	api.Debug = cfg.Debug
@@ -100,7 +100,7 @@ func New(cfg *Config) (*Bot, error) {
 
 func initRand() {
 	var b [8]byte
-	_, err := crypto_rand.Read(b[:])
+	_, err := cryptorand.Read(b[:])
 	if err != nil {
 		panic("cannot seed math/rand package with cryptographically secure random number generator")
 	}
@@ -120,7 +120,7 @@ func (bot *Bot) Start(ctx context.Context) (chan error, error) {
 	bot.errors = make(chan error, bot.cfg.Workers)
 
 	for i := 0; i < bot.cfg.Workers; i++ {
-		go bot.worker(i)
+		go bot.worker()
 	}
 
 	done := make(chan error)
@@ -152,7 +152,7 @@ func (bot *Bot) Start(ctx context.Context) (chan error, error) {
 	return done, nil
 }
 
-func (bot *Bot) worker(idx int) {
+func (bot *Bot) worker() {
 	bot.wg.Add(1)
 	defer bot.wg.Done()
 
@@ -160,7 +160,7 @@ loop:
 	for {
 		select {
 		case update := <-bot.updates:
-			err := bot.processUpdate(update, idx)
+			err := bot.processUpdate(update)
 			if err != nil {
 				bot.errors <- err
 				break loop
@@ -171,7 +171,7 @@ loop:
 	}
 }
 
-func (bot *Bot) processUpdate(update tgbotapi.Update, workerIdx int) error {
+func (bot *Bot) processUpdate(update tgbotapi.Update) error {
 	if update.Message == nil {
 		bot.logDebug("Message is missing")
 		return nil
@@ -227,7 +227,7 @@ func (bot *Bot) processUpdate(update tgbotapi.Update, workerIdx int) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	// Decode image
 	img, format, err := image.Decode(resp.Body)

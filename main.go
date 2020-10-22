@@ -56,8 +56,8 @@ func main() {
 	}
 
 	if err != nil {
-		log.Printf("Bot stopped with error: %v", err)
+		log.Printf("Bot stopped with an error: %v", err)
 	} else {
-		log.Print("Bot stopped without error")
+		log.Print("Bot stopped without errors")
 	}
 }
