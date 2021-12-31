@@ -1,5 +1,5 @@
 # Telegram bot token
-token: 'Your token here'
+token: '5016713832:AAFanQaM9w7R6H0KvCW8LoxDTK5-yu1ui9E'
 # Debug mode
 debug: true
 # Number of workers (should be equal number of cores)
@@ -11,7 +11,7 @@ group:
   # Enable or disable for groups
   enabled: true
   # Caption to activate bot (empty string for any caption)
-  activation_phrase: 'bot'
+  activation_phrase: ''
   # Probability of activation in any case (0.0 for activation only with caption)
   activation_probability: 0.1
 # List of phrases to choose from
